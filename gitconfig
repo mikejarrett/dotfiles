@@ -1,0 +1,18 @@
+[user]
+    email = mike.d.jarrett@gmail.com
+    name = Mike Jarrett
+[push]
+    default = simple
+[alias]
+    pr = pull --rebase 
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    df = diff
+    lg = log -p
+    frick = reset --hard
+[color]
+    ui = true
+[core]
+    editor = vim
