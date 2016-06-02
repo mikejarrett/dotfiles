@@ -239,8 +239,8 @@ call dein#add('kchmck/vim-coffee-script', {
 " GUI {{{
 
 " A better looking status line
-call dein#add('vim-airline/vim-airline')
-call dein#add('vim-airline/vim-airline-themes')
+" call dein#add('vim-airline/vim-airline')
+" call dein#add('vim-airline/vim-airline-themes')
 " Zooms a window
 call dein#add('vim-scripts/zoomwintab.vim', {'on_cmd' : 'ZoomWinTabToggle'})
 " easily window resizing
@@ -400,7 +400,7 @@ set autoindent                 " set on the auto-indent
 
 " set formatoptions=qrn1ct
 set textwidth=80
-set colorcolumn=81
+set colorcolumn=80
 
 function! ToggleWrap()
     let s:nowrap_cc_bg = [22, '#005f00']
@@ -451,7 +451,7 @@ set t_Co=256                   " 256 colors for the terminal
 if has('gui_running')
     colorscheme molokai
 else
-    colorscheme molokai256
+    colorscheme badwolf
 endif
 
 " }}}
