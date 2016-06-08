@@ -16,3 +16,4 @@
     ui = true
 [core]
     editor = vim
+    excludesfile = ~/.gitignore
