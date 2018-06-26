@@ -65,6 +65,7 @@ call dein#add('osyo-manga/unite-quickfix')
 call dein#add('osyo-manga/unite-fold')
 call dein#add('tacroe/unite-mark')
 call dein#add('Shougo/neomru.vim')
+call dein#add('hashivim/vim-terraform')
 
 " File explorer (needed where ranger is not available)
 call dein#add('Shougo/vimfiler', { 'on_cmd' : 'VimFiler'})
@@ -178,7 +179,7 @@ call dein#add('vim-scripts/utl.vim')
 " Text edition {{{
 
 " Autocompletion of (, [, {, ', ", ...
-call dein#add('delimitMate.vim')
+" call dein#add('delimitMate.vim')
 " Smart and fast date changer
 call dein#add('tpope/vim-speeddating')
 " to surround vim objects with a pair of identical chars
@@ -294,7 +295,6 @@ endif
 filetype plugin indent on      " Indent and plugins by filetype
 
 " END DEIN }}}
-
 " VIM Setup {{{ ===============================================================
 
 " <Leader> & <LocalLeader> mapping {{{
@@ -1013,16 +1013,24 @@ let g:po_translator = "joe di castro <joe@joedicastro.com>"
 nmap <silent><Leader>n :PymodeLint<CR>
 
 let g:pymode_breakpoint_bind = '<Leader>B'
+let g:pymode_python = 'python3'
 
 let g:pymode_lint = 1
 let g:pymode_lint_on_write = 0
 let g:pymode_lint_checkers = ['pylint', 'pep8', 'mccabe', 'pep257']
 let g:pymode_lint_ignore = ''
 let g:pymode_virtualenv = 0
-let g:pymode_rope = 1
 
-let g:pymode_rope_completion = 0
-let g:pymode_rope_complete_on_dot = 1
+let g:pymode_rope = 1
+let g:pymode_rope_organize_imports_bind = '<Leader>E'
+
+" }}}
+
+" vim-terraform {{{ ----------------------------------------------------------
+
+let g:terraform_align = 1
+let g:terraform_fmt_on_save = 1
+autocmd FileType terraform setlocal commentstring=#%s
 
 " }}}
 
@@ -1880,7 +1888,25 @@ let s:vimcustomfile = $HOME.'/.vim/custom.vim'
 if filereadable(s:vimcustomfile)
     exec 'source '.s:vimcustomfile
 endif
+"
+" Set background to be transparent
+hi Normal guibg=NONE ctermbg=NONE
+
+" Set visual bell to off
+autocmd GUIEnter * set vb t_vb= " for your GUI
+autocmd VimEnter * set vb t_vb=
 
 " }}}
 
 " vim:foldmethod=marker
+set clipboard=unnamedplus
+
+" Scolling speed ups for vim 8
+" syntax off                      " radical
+set synmaxcol=200               " arbitrary number < 3000 (default value)
+" set foldmethod=manual           " anything other than 'syntax'
+" set foldmethod=indent
+set noshowmatch
+set ttyfast
+set lazyredraw
+set re=1
