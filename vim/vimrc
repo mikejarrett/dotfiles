@@ -138,7 +138,7 @@ call dein#add('Shougo/vinarise.vim')
 " Autocompletion
 call dein#add('Shougo/neocomplete.vim')
 " A Python plugin
-call dein#add('klen/python-mode', {'on_ft': ['python']})
+call dein#add('python-mode/python-mode', {'on_ft': ['python']})
 " Admin virtualenvs
 call dein#add('jmcantrell/vim-virtualenv')
 " Show indent lines
@@ -1022,7 +1022,19 @@ let g:pymode_lint_ignore = ''
 let g:pymode_virtualenv = 0
 
 let g:pymode_rope = 1
-let g:pymode_rope_organize_imports_bind = '<Leader>E'
+let g:pymode_rope_organize_imports_bind = '<leader>poi'
+let g:pymode_run_bind = '<leader>r'
+let g:pymode_breakpoint_bind = '<leader>b'
+let g:pymode_rope_show_doc_bind = '<leader>pd'
+let g:pymode_rope_goto_definition_bind = '<leader>pg'
+let g:pymode_rope_goto_definition_cmd = 'new'
+let g:pymode_rope_rename_bind = '<leader>pr'
+let g:pymode_rope_module_to_package_bind = '<leader>p1p'
+let g:pymode_rope_extract_method_bind = '<leader>pm'
+let g:pymode_rope_extract_variable_bind = '<leader>pl'
+let g:pymode_rope_use_function_bind = '<leader>pu'
+let g:pymode_rope_move_bind = '<leader>pv'
+let g:pymode_rope_change_signature_bind = '<leader>ps'
 
 " }}}
 
