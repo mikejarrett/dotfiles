@@ -149,6 +149,8 @@ call dein#add('alfredodeza/coveragepy.vim', {'on_ft': ['python']})
 call dein#add('fisadev/vim-isort', {'autoload': {'filetypes': ['python']}})
 " FastFold
 call dein#add('Konfekt/FastFold')
+" black - uncompromising Python code formatter
+call dein#add('ambv/black')
 " }}}
 
 " Code Snippets {{{
@@ -1035,6 +1037,15 @@ let g:pymode_rope_extract_variable_bind = '<leader>pl'
 let g:pymode_rope_use_function_bind = '<leader>pu'
 let g:pymode_rope_move_bind = '<leader>pv'
 let g:pymode_rope_change_signature_bind = '<leader>ps'
+
+" }}}
+"
+" Black {{{ -------------------------------------------------------------
+
+let g:black_fast = 0 " default
+let g:black_linelength = 88 " default
+let g:black_skip_string_normalization = 1
+let g:black_virtualenv = '~/.vim/black' " default
 
 " }}}
 
