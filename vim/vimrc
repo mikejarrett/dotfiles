@@ -66,6 +66,7 @@ call dein#add('osyo-manga/unite-fold')
 call dein#add('tacroe/unite-mark')
 call dein#add('Shougo/neomru.vim')
 call dein#add('hashivim/vim-terraform')
+call dein#add('chrisbra/csv.vim')
 
 " File explorer (needed where ranger is not available)
 call dein#add('Shougo/vimfiler', { 'on_cmd' : 'VimFiler'})
@@ -136,7 +137,11 @@ call dein#add('Shougo/vinarise.vim')
 " Python {{{
 
 " Autocompletion
-call dein#add('Shougo/neocomplete.vim')
+call dein#add('Shougo/deoplete.nvim')
+if !has('nvim')
+  call dein#add('roxma/nvim-yarp')
+  call dein#add('roxma/vim-hug-neovim-rpc')
+endif
 " A Python plugin
 call dein#add('python-mode/python-mode', {'on_ft': ['python']})
 " Admin virtualenvs
@@ -212,7 +217,7 @@ call dein#add('kana/vim-textobj-user')
 
 " }}}
 
-" HTML/CSS {{{
+" HTML/CSS/TypeScript {{{
 
 " A smart and powerful Color Management tool. Needs to be loaded to be able
 " to use the mappings
@@ -236,6 +241,15 @@ call dein#add('kchmck/vim-coffee-script', {
                              \ 'CoffeeRun', 'CoffeeWatch'],
             \ 'filetypes' : ['coffee']
             \ })
+
+call dein#add('leafgarland/typescript-vim')
+call dein#add('Quramy/tsuquyomi')
+call dein#add('Shougo/vimproc.vim', {'build' : {'linux' : 'make'}})
+call dein#add('Valloric/YouCompleteMe', {
+     \ 'build' : {
+     \     'unix' : 'python3 install.py --clang-completer --system-libclang --omnisharp-completer',
+     \    }
+     \ })
 
 " }}}
 
@@ -401,8 +415,8 @@ set softtabstop=4              " a soft-tab of four spaces
 set autoindent                 " set on the auto-indent
 
 " set formatoptions=qrn1ct
-set textwidth=80
-set colorcolumn=80
+set textwidth=88
+set colorcolumn=88
 
 function! ToggleWrap()
     let s:nowrap_cc_bg = [22, '#005f00']
@@ -417,12 +431,12 @@ function! ToggleWrap()
     if s:curr_cc_guibg != s:nowrap_cc_bg[1]
         let g:curr_cc_guibg = s:curr_cc_guibg
     endif
-    if &textwidth == 80
+    if &textwidth == 88
         set textwidth=0
         exec 'hi ColorColumn ctermbg='.s:nowrap_cc_bg[0].
                     \' guibg='.s:nowrap_cc_bg[1]
     elseif &textwidth == 0
-        set textwidth=80
+        set textwidth=88
         exec 'hi ColorColumn ctermbg='.g:curr_cc_ctermbg.
                     \' guibg='.g:curr_cc_guibg
     endif
@@ -945,34 +959,34 @@ let g:indentLine_color_term = 239
 
 " }}}
 
-" Neocomplete {{{
+" Deocomplete {{{
 
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#enable_refresh_always = 1
-let g:neocomplete#max_list = 30
-let g:neocomplete#min_keyword_length = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 1
-let g:neocomplete#data_directory = $HOME.'/.vim/tmp/neocomplete'
+let g:deoplete#enable_at_startup = 0
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_refresh_always = 1
+let g:deoplete#max_list = 30
+let g:deoplete#min_keyword_length = 2
+let g:deoplete#sources#syntax#min_keyword_length = 2
+let g:deoplete#data_directory = $HOME.'/.vim/tmp/deoplete'
 
 " disable the auto select feature by default to speed up writing without
 " obstacles (is optimal for certain situations)
-let g:neocomplete#enable_auto_select = 0
+let g:deoplete#enable_auto_select = 0
                                         
 " toggle the auto select feature
-function! ToggleNeoComplete()
-  if !g:neocomplete#disable_auto_complete && g:neocomplete#enable_auto_select
-      let g:neocomplete#disable_auto_complete = 0
-      let g:neocomplete#enable_auto_select = 0
-  elseif !g:neocomplete#disable_auto_complete && !g:neocomplete#enable_auto_select
-      let g:neocomplete#disable_auto_complete = 1
-      let g:neocomplete#enable_auto_select = 0
-  elseif g:neocomplete#disable_auto_complete && !g:neocomplete#enable_auto_select
-      let g:neocomplete#disable_auto_complete = 0
-      let g:neocomplete#enable_auto_select = 1
+function! ToggleDeoplete()
+  if !g:deoplete#disable_auto_complete && g:deoplete#enable_auto_select
+      let g:deoplete#disable_auto_complete = 0
+      let g:deoplete#enable_auto_select = 0
+  elseif !g:deoplete#disable_auto_complete && !g:deoplete#enable_auto_select
+      let g:deoplete#disable_auto_complete = 1
+      let g:deoplete#enable_auto_select = 0
+  elseif g:deoplete#disable_auto_complete && !g:deoplete#enable_auto_select
+      let g:deoplete#disable_auto_complete = 0
+      let g:deoplete#enable_auto_select = 1
   endif
 endfunction
-nnoremap <silent><Leader>ea :call ToggleNeoComplete()<CR>
+nnoremap <silent><Leader>ea :call ToggleDeoplete()<CR>
    
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -982,11 +996,11 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
+if !exists('g:deoplete#sources#omni#input_patterns')
+    let g:deoplete#sources#omni#input_patterns = {}
 endif
 
-let g:neocomplete#sources#omni#input_patterns.python='[^. \t]\.\w*'
+let g:deoplete#sources#omni#input_patterns.python='[^. \t]\.\w*'
 
 " }}}
 
@@ -1018,18 +1032,20 @@ let g:pymode_breakpoint_bind = '<Leader>B'
 let g:pymode_python = 'python3'
 
 let g:pymode_lint = 1
-let g:pymode_lint_on_write = 0
-let g:pymode_lint_checkers = ['pylint', 'pep8', 'mccabe', 'pep257']
+let g:pymode_lint_on_write = 1
+let g:pymode_lint_checkers = ['flake8', 'pep257']  " 'pylint', 'pep8', 'mccabe', 
 let g:pymode_lint_ignore = ''
 let g:pymode_virtualenv = 0
 
 let g:pymode_rope = 1
+let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_organize_imports_bind = '<leader>poi'
+let g:pymode_rope_autoimport_bind = '<leader>pai'
 let g:pymode_run_bind = '<leader>r'
 let g:pymode_breakpoint_bind = '<leader>b'
 let g:pymode_rope_show_doc_bind = '<leader>pd'
 let g:pymode_rope_goto_definition_bind = '<leader>pg'
-let g:pymode_rope_goto_definition_cmd = 'new'
+let g:pymode_rope_goto_definition_cmd = 'e'  " e, new or vnew
 let g:pymode_rope_rename_bind = '<leader>pr'
 let g:pymode_rope_module_to_package_bind = '<leader>p1p'
 let g:pymode_rope_extract_method_bind = '<leader>pm'
@@ -1038,14 +1054,18 @@ let g:pymode_rope_use_function_bind = '<leader>pu'
 let g:pymode_rope_move_bind = '<leader>pv'
 let g:pymode_rope_change_signature_bind = '<leader>ps'
 
+let g:pymode_options_max_line_length = 100
+let g:pymode_options_colorcolumn = 1
+
 " }}}
 "
 " Black {{{ -------------------------------------------------------------
 
 let g:black_fast = 0 " default
-let g:black_linelength = 88 " default
+let g:black_linelength = 100 " default 88
 let g:black_skip_string_normalization = 1
 let g:black_virtualenv = '~/.vim/black' " default
+nnoremap <leader>bb :Black<CR>
 
 " }}}
 
@@ -1061,7 +1081,7 @@ autocmd FileType terraform setlocal commentstring=#%s
 
 nmap <silent><Leader>N :SyntasticCheck<CR>:Errors<CR>
 
-let g:syntastic_python_pylint_exe = "pylint2"
+let g:syntastic_python_pylint_exe = "pylint"
 let g:syntastic_mode_map = { 'mode': 'active',
             \ 'active_filetypes': [],
             \ 'passive_filetypes': ['python'] }
@@ -1294,7 +1314,7 @@ let g:unite_source_menu_menus.text.command_candidates = [
     \['▷ toggle wrapping                                            ⌘ ,ew',
         \'call ToggleWrap()'],
     \['▷ toggle auto-completion state (manual → disabled → auto)    ⌘ ,ea',
-        \'call ToggleNeoCompleteAutoSelect()'],
+        \'call ToggleDeopleteAutoSelect()'],
     \['▷ show hidden chars                                          ⌘ ,eh',
         \'set list!'],
     \['▷ toggle fold                                                ⌘ /',
@@ -1443,15 +1463,15 @@ let g:unite_source_menu_menus.code.command_candidates = [
         \'VimuxCloseRunner'],
     \['▷ sort imports                               (isort)',
         \'Isort'],
-    \['▷ go to definition                           (pymode-rope)   ⌘ C-C g',
+    \['▷ go to definition                           (pymode-rope)   ⌘ ,pg',
         \'call pymode#rope#goto_definition()'],
     \['▷ find where a function is used              (pymode-rope)   ⌘ C-C f',
         \'call pymode#rope#find_it()'],
-    \['▷ show docs for current word                 (pymode-rope)   ⌘ C-C d',
+    \['▷ show docs for current word                 (pymode-rope)   ⌘ ,pd',
         \'call pymode#rope#show_doc()'],
-    \['▷ reorganize imports                         (pymode-rope)   ⌘ C-C r o',
+    \['▷ reorganize imports                         (pymode-rope)   ⌘ ,poi',
         \'call pymode#rope#organize_imports()'],
-    \['▷ refactorize - rename                       (pymode-rope)   ⌘ C-C r r',
+    \['▷ refactorize - rename                       (pymode-rope)   ⌘ ,pr',
         \'call pymode#rope#rename()'],
     \['▷ refactorize - inline                       (pymode-rope)   ⌘ C-C r i',
         \'call pymode#rope#inline()'],
@@ -1853,6 +1873,13 @@ map <Leader>z :ZoomWinTabToggle<CR>
 
 " }}}
 
+" YouCompleteMe {{{
+if !exists("g:ycm_semantic_triggers")
+    let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers['typescript'] = ['.']
+" }}}
+
 " END PLUGINS SETUP }}}
 
 " FILETYPES  {{{ ==============================================================
@@ -1933,3 +1960,4 @@ set noshowmatch
 set ttyfast
 set lazyredraw
 set re=1
+set number

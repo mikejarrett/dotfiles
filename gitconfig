@@ -12,6 +12,7 @@
     df = diff
     lg = log -p
     frick = reset --hard
+    cp = cherry-pick --strategy=recursive -X theirs
 [color]
     ui = true
 [core]
