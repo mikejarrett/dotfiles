@@ -245,11 +245,8 @@ call dein#add('kchmck/vim-coffee-script', {
 call dein#add('leafgarland/typescript-vim')
 call dein#add('Quramy/tsuquyomi')
 call dein#add('Shougo/vimproc.vim', {'build' : {'linux' : 'make'}})
-call dein#add('Valloric/YouCompleteMe', {
-     \ 'build' : {
-     \     'unix' : 'python3 install.py --clang-completer --system-libclang --omnisharp-completer',
-     \    }
-     \ })
+":call dein#recache_runtimepath()
+call dein#add('ycm-core/YouCompleteMe', {'merged': 0})
 
 " }}}
 
@@ -1874,10 +1871,12 @@ map <Leader>z :ZoomWinTabToggle<CR>
 " }}}
 
 " YouCompleteMe {{{
+":call dein#recache_runtimepath()
 if !exists("g:ycm_semantic_triggers")
     let g:ycm_semantic_triggers = {}
 endif
 let g:ycm_semantic_triggers['typescript'] = ['.']
+
 " }}}
 
 " END PLUGINS SETUP }}}
@@ -1961,3 +1960,9 @@ set ttyfast
 set lazyredraw
 set re=1
 set number
+
+
+nnoremap th  :tabfirst<CR>
+nnoremap tk  :tabnext<CR>
+nnoremap tj  :tabprev<CR>
+nnoremap tl  :tablast<CR>
