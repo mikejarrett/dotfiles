@@ -59,7 +59,7 @@ echo "" >> ~/.profile
 echo "# brew" >> ~/.profile
 echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
 source ~/.profile
-brew install nvm pyenv rbenv gcc pyenv-virtualenv mono go nodejs java rust
+brew install nvm pyenv rbenv gcc pyenv-virtualenv go nodejs java
 
 echo "" >> ~/.profile
 echo "# nvm" >> ~/.profile
