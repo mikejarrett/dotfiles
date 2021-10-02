@@ -47,6 +47,9 @@ sudo apt install --yes \
     shellcheck \
     tmux
 
+# rust
+curl https://sh.rustup.rs -sSf | sh
+
 # vim install
 bash ~/dotfiles/vim82-install.sh
 
@@ -109,5 +112,6 @@ ln -s ~/dotfiles/gitconfig ~/.gitconfig
 
 echo "To install YouCompleteMe ..."
 echo "Launch vim and let it install all the plugins then exit and run the following..."
+echo "You may may need to run 'ln -s /bin/gcc /bin/gcc-5' if it doesn't complete."
 echo "cd ~/.vim/dein/repos/github.com/ycm-core/YouCompleteMe/"
 echo "python3 install.py --all"
