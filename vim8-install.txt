@@ -60,6 +60,7 @@ export LUA_PREFIX=/usr/local
 --enable-largefile \
 --disable-netbeans \
 --with-compiledby=sh1r0 \
+--enable-clipboard \
 --enable-fail-if-missing
 
 # --enable-luainterp \
